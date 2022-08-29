@@ -7,7 +7,6 @@ const {deleteEventFromDb} = require('./mongodb-connect-crud/delete.js');
 //_________________________________________________________________________________________________________________________
 
 const app = express();
-const router = express.Router();
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
@@ -29,8 +28,8 @@ const addEvent = async (req, res) => {
   const eventId = await addEventToDb(req.body);
   if(eventId) {
     res.send({event_id : eventId})
-  }
-  res.send("Error saving data")
+  } else
+    res.send("Error saving data")
 };
 //________________________________________________________________________________________________________________________
 
@@ -38,8 +37,8 @@ const updateEvent = async (req, res) => {
   const response = await updateEventById(req.params.id, req.body)
   if(response) {
     res.send("Event update success");
-  }
-  res.send("Event update failed");
+  } else 
+    res.send("Event update failed");
 };
 //________________________________________________________________________________________________________________________
 
@@ -47,8 +46,8 @@ const deleteEvent = async (req, res) => {
   const response = await deleteEventFromDb(req.params.id)
   if(response) {
     res.send("Event deleted");
-  }
-  res.send("Event deletion failed");  
+  } else 
+    res.send("Event deletion failed");  
 
 }
 //________________________________________________________________________________________________________________________
