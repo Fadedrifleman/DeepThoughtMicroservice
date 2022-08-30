@@ -18,14 +18,15 @@ Here I have create 5 REST APIs:
 			
 			
 I have used several libraries :
-		-"body-parser": "^1.20.0"
-				To pass req objects
+
+	-"body-parser": "^1.20.0"
+				To pass req objects (to get data via form)
 		
-    -"express": "^4.18.1"
-				
+	-"express": "^4.18.1"
+				framework
 		
-    -"mongodb": "^4.9.0"
+	-"mongodb": "^4.9.0"
 				to connect and peform CRUD operations to DB
 		
-    -"multer": "^1.4.5-lts.1"
-				to pass req.file 
+    	-"multer": "^1.4.5-lts.1"
+				to pass req.file (to get files via form)
