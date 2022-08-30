@@ -4,9 +4,12 @@ const {addEventToDb} = require('./mongodb-connect-crud/create.js');
 const {getEventById, getEventByRecency} = require('./mongodb-connect-crud/read.js');
 const {updateEventById} = require('./mongodb-connect-crud/update.js');
 const {deleteEventFromDb} = require('./mongodb-connect-crud/delete.js');
+const multer = require('multer'); 
 //_________________________________________________________________________________________________________________________
 
 const app = express();
+
+const upload = multer({ dest: 'uploads/' })
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
@@ -25,7 +28,7 @@ const getEvents = async (req,res) => {
 //________________________________________________________________________________________________________________________
 
 const addEvent = async (req, res) => {
-  const eventId = await addEventToDb(req.body);
+  const eventId = await addEventToDb(req.body, req.file);
   if(eventId) {
     res.send({event_id : eventId})
   } else
@@ -34,6 +37,9 @@ const addEvent = async (req, res) => {
 //________________________________________________________________________________________________________________________
 
 const updateEvent = async (req, res) => {
+  if(req.file){
+    req.body.files = req.file.path;
+  }
   const response = await updateEventById(req.params.id, req.body)
   if(response) {
     res.send("Event update success");
@@ -52,8 +58,8 @@ const deleteEvent = async (req, res) => {
 }
 //________________________________________________________________________________________________________________________
 
-app.route('/api/v3/app/events').get(getEvents).post(addEvent);
-app.route('/api/v3/app/events/:id').put(updateEvent).delete(deleteEvent);
+app.route('/api/v3/app/events').get(getEvents).post(upload.single("files"), addEvent);
+app.route('/api/v3/app/events/:id').put(upload.single("files"), updateEvent).delete(deleteEvent);
 //________________________________________________________________________________________________________________________
 
 let port = process.env.PORT;

@@ -6,10 +6,10 @@ const getEventById = async (eventId) => {
     return foundObj;
 };
 //--------------------------------------------------------------------------------------------------------------------------
-//change pending====>
 const getEventByRecency = async (type, limit , page) => {
     const db = await dbConnect();
-    const foundObj = await db.find().toArray();
+    //type = =1 for recent records & type = 1 for older records
+    const foundObj = await db.find().sort({$natural: type}).skip(limit * (page-1)).limit(parseInt(limit)).toArray();
     return foundObj
 }
 //--------------------------------------------------------------------------------------------------------------------------
