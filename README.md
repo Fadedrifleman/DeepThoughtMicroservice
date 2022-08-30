@@ -28,5 +28,5 @@ I have used several libraries :
 	-"mongodb": "^4.9.0"
 				to connect and peform CRUD operations to DB
 		
-    	-"multer": "^1.4.5-lts.1"
+	-"multer": "^1.4.5-lts.1"
 				to pass req.file (to get files via form)
