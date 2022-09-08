@@ -8,7 +8,7 @@ const getEventById = async (eventId) => {
 //--------------------------------------------------------------------------------------------------------------------------
 const getEventByRecency = async (type, limit , page) => {
     const db = await dbConnect();
-    //type = =1 for recent records & type = 1 for older records
+    //type = -1 for recent records & type = 1 for older records
     const foundObj = await db.find().sort({$natural: type}).skip(limit * (page-1)).limit(parseInt(limit)).toArray();
     return foundObj
 }
